@@ -21,47 +21,47 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    @DeleteMapping(value = "delete")
-    public Integer deleteUser(@RequestParam Integer id){
+    @DeleteMapping(value = "/delete")
+    public String deleteUser(@RequestParam Integer id) throws JsonProcessingException {
         return userService.deleteUser(id);
     }
-    @PostMapping(value = "update")
+    @PostMapping(value = "/update")
     public String updateUserById(@RequestParam Integer id, @RequestBody User user){
         return userService.updateUserById(id,user);
     }
-    @GetMapping(value = "get_user")
+    @GetMapping(value = "/get_user")
     public User getUserById(@RequestParam Integer id) throws JsonProcessingException {
         return userService.getUserById(id);
     }
-    @GetMapping(value = "get_all")
+    @GetMapping(value = "/get_all")
     public List<User> getAllUsers(){
         return userService.getAllUsers();
     }
 
 
-
-
-
-
-    public void getVar(User user){
-        // Loop through the object and get the values of its variables
-        Class<?> clazz = user.getClass();
-        Field[] fields = clazz.getDeclaredFields();
-
-        for (Field field : fields) {
-            try {
-                // Make private fields accessible (if they are private)
-                field.setAccessible(true);
-
-                // Get the value of the field
-                Object value = field.get(user);
-
-                // Print variable name and its value
-                System.out.println("Variable: " + field.getName() + ", Value: " + value);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//
+//
+//
+//
+//    public void getVar(User user){
+//        // Loop through the object and get the values of its variables
+//        Class<?> clazz = user.getClass();
+//        Field[] fields = clazz.getDeclaredFields();
+//
+//        for (Field field : fields) {
+//            try {
+//                // Make private fields accessible (if they are private)
+//                field.setAccessible(true);
+//
+//                // Get the value of the field
+//                Object value = field.get(user);
+//
+//                // Print variable name and its value
+//                System.out.println("Variable: " + field.getName() + ", Value: " + value);
+//            } catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }
 

@@ -6,6 +6,7 @@ import com.User.model.Util;
 import com.User.repository.mapper.UserMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -34,15 +35,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Integer deleteUser(Integer id) {
+    public void deleteUser(Integer id) {
         String sql = "DELETE FROM " + Util.USER_TABLE_NAME + " WHERE id = ?";
         jdbcTemplate.update(sql, id);
         if (jdbcTemplate.update(sql, id) == 1) {
             System.out.println("user " + id + " was deleted");
-            return id;
         } else {
             System.out.println("no user was deleted");
-            return null;
         }
     }
 
@@ -60,8 +59,12 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User getUserById(Integer id) {
         String sql = "SELECT * FROM " + Util.USER_TABLE_NAME + " WHERE id = ?";
-        User user = jdbcTemplate.queryForObject(sql, new UserMapper(), id);
-        return user;
+        try {
+            User user = jdbcTemplate.queryForObject(sql, new UserMapper(), id);
+            return user;
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
     }
 
     @Override
@@ -119,5 +122,7 @@ public class UserRepositoryImpl implements UserRepository {
         }
         return fin;
     }
+
+
 }
 

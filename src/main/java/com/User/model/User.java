@@ -2,8 +2,6 @@ package com.User.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
-
 public class User {
     @JsonProperty("user_id")
     private Integer userId;
@@ -18,12 +16,12 @@ public class User {
     @JsonProperty("address")
     private String address;
     @JsonProperty("join_date")
-    private Date date;
+    private String date;
 
     public User() {
     }
 
-    public User(Integer userId, String firstName, String lastName, String email, Double age, String address, Date date) {
+    public User(Integer userId, String firstName, String lastName, String email, Double age, String address, String date) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -84,11 +82,11 @@ public class User {
         this.address = address;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

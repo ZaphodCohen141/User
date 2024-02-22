@@ -1,6 +1,7 @@
 package com.User.service;
 
 import com.User.model.User;
+import com.User.poolMicroService.PoolController;
 import com.User.repository.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +16,8 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private PoolController poolController;
     @Override
     public Integer createUser(User user) throws JsonProcessingException {
         String userAsString = objectMapper.writeValueAsString(user);
@@ -23,8 +26,18 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Integer deleteUser(Integer id) {
-        return userRepository.deleteUser(id);
+    public String deleteUser(Integer id) throws JsonProcessingException {
+//        check that the user really exists
+//        if exists - send to the pool server to delete user's reply
+        User user = userRepository.getUserById(id);
+        if (user == null){
+            return "there is no user with id " + id;
+
+        }else{
+            userRepository.deleteUser(id);
+            poolController.deleteRepliesByUserId(id);
+            return "user " + id + " was deleted";
+        }
     }
 
     @Override

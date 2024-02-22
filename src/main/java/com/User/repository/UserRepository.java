@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserRepository {
     Integer createUser(User user);
-    Integer deleteUser(Integer id);
+    void deleteUser(Integer id);
     String updateUserById(Integer id, User user);
     User getUserById(Integer id) throws JsonProcessingException;
     List<User> getAllUsers();
